@@ -68,7 +68,8 @@ public class AppointmentServiceImpl implements AppointmentService {
                             new SqlParameter("P_START_TIME", Types.TIMESTAMP),
                             new SqlParameter("P_END_TIME", Types.TIMESTAMP),
                             new SqlParameter("p_duration", Types.INTEGER),
-                            new SqlOutParameter("p_flag", Types.VARCHAR),
+                            new SqlParameter(" p_calender_id", Types.INTEGER),
+                           new SqlOutParameter("p_flag", Types.VARCHAR),
                             new SqlOutParameter("p_out_msg", Types.VARCHAR)
                     );
 
@@ -76,6 +77,7 @@ public class AppointmentServiceImpl implements AppointmentService {
             inParams.put("P_START_TIME", startdateTime);
             inParams.put("P_END_TIME", endDateTime);
             inParams.put("p_duration", duration);
+            inParams.put("p_calender_id", calendarIds);
 
             Map<String, Object> out = jdbcCall.execute(inParams);
 

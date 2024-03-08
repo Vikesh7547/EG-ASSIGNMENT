@@ -1,6 +1,7 @@
 CREATE OR REPLACE PROCEDURE CALTIMEDIFF(p_start_time IN TIMESTAMP,
                                         p_end_time   IN TIMESTAMP,
                                         p_duration   IN NUMBER,
+                                        p_calender_id IN VARCHAR2,
                                         p_flag       out varchar2,
                                         p_out_msg    OUT VARCHAR2) IS
   v_available_start     TIMESTAMP;
@@ -33,7 +34,7 @@ BEGIN
      WHERE ((a.startdate BETWEEN w_start_time AND w_end_time) or
            (a.enddate BETWEEN w_start_time AND w_end_time)
            
-           );
+           ) and a.calendar_id=p_calender_id;
   
     SELECT count(*)
       into W_COUNT
@@ -42,7 +43,7 @@ BEGIN
      WHERE ((a.startdate BETWEEN w_start_time AND w_end_time) or
            (a.enddate BETWEEN w_start_time AND w_end_time)
            
-           );
+           ) and a.calendar_id=p_calender_id;
     if (W_COUNT > 1) then
       DBMS_OUTPUT.put_line('inside count');
     else
@@ -54,7 +55,7 @@ BEGIN
        WHERE ((a.startdate BETWEEN w_start_time AND w_end_time) or
              (a.enddate BETWEEN w_start_time AND w_end_time)
              
-             )
+             ) and a.calendar_id=p_calender_id
          and rownum = 1;
     
     end if;
